@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import 'express-async-errors';
 
 import express from 'express';
+import { NextFunction, Response, Request } from 'express';
 import cors from 'cors';
 
 import './database';
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use('/api/v1', router);
 
 app.use(
-  (err: Error, request: express.Request, response: express.Response, _next: express.NextFunction) => {
+  (err: Error, request: Request, response: Response, _next: NextFunction) => {
     if (err instanceof AppError) {
       return response.status(err.statusCode).json({
         message: err.message
