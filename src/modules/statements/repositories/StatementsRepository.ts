@@ -17,8 +17,33 @@ export class StatementsRepository implements IStatementsRepository {
     user_id,
     amount,
     description,
-    type
+    type,
+    receiver_id
   }: ICreateStatementDTO): Promise<Statement> {
+    if(type === 'transfer'){
+      const statementSender = this.repository.create({
+        user_id,
+        description,
+        amount,
+        type,
+        sender_id: user_id,
+        receiver_id
+      })
+      
+      await this.repository.save(statementSender)
+    
+      const statementReceiver = this.repository.create({
+        user_id: receiver_id,
+        description,
+        amount,
+        type,
+        sender_id: statementSender.sender_id,
+        receiver_id
+      })
+
+      return await this.repository.save(statementReceiver)
+    }   
+
     const statement = this.repository.create({
       user_id,
       amount,

@@ -43,6 +43,12 @@ export class Statement {
   @CreateDateColumn()
   updated_at: Date;
 
+  @Column()
+  sender_id: string;
+
+  @Column()
+  receiver_id: string;
+
   constructor() {
     if (!this.id) {
       this.id = uuid();
