@@ -30,14 +30,36 @@ export class CreateStatementUseCase {
       }
     }
 
-    const statementOperation = await this.statementsRepository.create({
-      user_id,
-      type,
-      amount,
-      description,
-      receiver_id
-    });
+    if(type === 'transfer'){
+        const statementSender = await this.statementsRepository.create({
+          user_id,
+          description,
+          amount,
+          type,
+          sender_id: user_id,
+        })
+  
+        
+        await this.statementsRepository.create({
+          user_id: receiver_id,
+          description,
+          amount,
+          type,
+          sender_id: statementSender.sender_id,
+        })
 
-    return statementOperation;
+        return statementSender;
+  
+      }
+
+      const statementOperation = await this.statementsRepository.create({
+        user_id,
+        type,
+        amount,
+        description,
+      });
+  
+      return statementOperation;
+    }
   }
-}
+

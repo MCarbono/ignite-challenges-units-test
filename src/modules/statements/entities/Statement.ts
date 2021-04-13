@@ -46,9 +46,6 @@ export class Statement {
   @Column()
   sender_id: string;
 
-  @Column()
-  receiver_id: string;
-
   constructor() {
     if (!this.id) {
       this.id = uuid();

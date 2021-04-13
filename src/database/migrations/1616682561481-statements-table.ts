@@ -44,11 +44,6 @@ export class accountsTable1616682561481 implements MigrationInterface {
           name: 'sender_id',
           type: 'uuid',
           isNullable: true
-        },
-        {
-          name: 'receiver_id',
-          type: 'uuid',
-          isNullable: true
         }
       ],
       foreignKeys: [
